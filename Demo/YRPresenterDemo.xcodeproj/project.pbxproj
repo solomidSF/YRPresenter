@@ -13,6 +13,9 @@
 		7D81471E1DA82A8400D36E28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8147141DA82A8400D36E28 /* LaunchScreen.storyboard */; };
 		7D81471F1DA82A8400D36E28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8147161DA82A8400D36E28 /* Main.storyboard */; };
 		7D8147211DA82A8400D36E28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D81471A1DA82A8400D36E28 /* main.m */; };
+		7D8147271DA82B3F00D36E28 /* YRTableViewPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8147261DA82B3F00D36E28 /* YRTableViewPresenter.m */; };
+		7D81472B1DA82C3D00D36E28 /* YRTableSectionDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D81472A1DA82C3D00D36E28 /* YRTableSectionDatasource.m */; };
+		7D81472E1DA82CB100D36E28 /* YRTableRowDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D81472D1DA82CB100D36E28 /* YRTableRowDatasource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,13 @@
 		7D8147171DA82A8400D36E28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7D8147191DA82A8400D36E28 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D81471A1DA82A8400D36E28 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7D8147251DA82B3F00D36E28 /* YRTableViewPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRTableViewPresenter.h; sourceTree = "<group>"; };
+		7D8147261DA82B3F00D36E28 /* YRTableViewPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRTableViewPresenter.m; sourceTree = "<group>"; };
+		7D8147291DA82C3D00D36E28 /* YRTableSectionDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRTableSectionDatasource.h; sourceTree = "<group>"; };
+		7D81472A1DA82C3D00D36E28 /* YRTableSectionDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRTableSectionDatasource.m; sourceTree = "<group>"; };
+		7D81472C1DA82CB100D36E28 /* YRTableRowDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRTableRowDatasource.h; sourceTree = "<group>"; };
+		7D81472D1DA82CB100D36E28 /* YRTableRowDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRTableRowDatasource.m; sourceTree = "<group>"; };
+		7D81472F1DA8314F00D36E28 /* YRTableSectionDatasource+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YRTableSectionDatasource+Private.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +80,7 @@
 			children = (
 				7D81470C1DA82A8400D36E28 /* AppDelegate.h */,
 				7D81470D1DA82A8400D36E28 /* AppDelegate.m */,
+				7D8147221DA82B0500D36E28 /* 3rdParty */,
 				7D81470E1DA82A8400D36E28 /* ViewControllers */,
 			);
 			path = Classes;
@@ -109,6 +120,38 @@
 				7D81471A1DA82A8400D36E28 /* main.m */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7D8147221DA82B0500D36E28 /* 3rdParty */ = {
+			isa = PBXGroup;
+			children = (
+				7D8147231DA82B1600D36E28 /* YRTableViewPresenter */,
+				7D8147241DA82B2300D36E28 /* YRCollectionViewPresenter */,
+			);
+			name = 3rdParty;
+			sourceTree = "<group>";
+		};
+		7D8147231DA82B1600D36E28 /* YRTableViewPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				7D8147251DA82B3F00D36E28 /* YRTableViewPresenter.h */,
+				7D8147261DA82B3F00D36E28 /* YRTableViewPresenter.m */,
+				7D81472F1DA8314F00D36E28 /* YRTableSectionDatasource+Private.h */,
+				7D8147291DA82C3D00D36E28 /* YRTableSectionDatasource.h */,
+				7D81472A1DA82C3D00D36E28 /* YRTableSectionDatasource.m */,
+				7D81472C1DA82CB100D36E28 /* YRTableRowDatasource.h */,
+				7D81472D1DA82CB100D36E28 /* YRTableRowDatasource.m */,
+			);
+			name = YRTableViewPresenter;
+			path = ../../../YRTableViewPresenter;
+			sourceTree = "<group>";
+		};
+		7D8147241DA82B2300D36E28 /* YRCollectionViewPresenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = YRCollectionViewPresenter;
+			path = ../../../YRCollectionViewPresenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,9 +226,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D81472B1DA82C3D00D36E28 /* YRTableSectionDatasource.m in Sources */,
 				7D81471C1DA82A8400D36E28 /* ViewController.m in Sources */,
 				7D8147211DA82A8400D36E28 /* main.m in Sources */,
 				7D81471B1DA82A8400D36E28 /* AppDelegate.m in Sources */,
+				7D8147271DA82B3F00D36E28 /* YRTableViewPresenter.m in Sources */,
+				7D81472E1DA82CB100D36E28 /* YRTableRowDatasource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
