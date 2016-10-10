@@ -8,6 +8,11 @@
 
 #import "YRTableSectionDatasource.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface YRTableSectionDatasource (Private)
 @property (nonatomic, weak, readwrite, nullable) YRTableViewPresenter *presenter;
+@property (nonatomic, readwrite) NSMutableArray <YRTableRowDatasource *> *mutableRowDatasource;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -8,6 +8,10 @@
 
 #import "YRTableRowDatasource.h"
 
+@interface YRTableRowDatasource ()
+@property (nonatomic, weak, readwrite, nullable) YRTableSectionDatasource *section;
+@end
+
 @implementation YRTableRowDatasource
 
 - (instancetype)initWithReuseIdentifier:(NSString *)identifier context:(nullable id)context {

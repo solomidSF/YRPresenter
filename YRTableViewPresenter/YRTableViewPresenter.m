@@ -1,13 +1,31 @@
 //
-//  YRTableViewPresenter.m
-//  YRPresenterDemo
+// YRTableViewPresenter.m
 //
-//  Created by Yuriy Romanchenko on 10/7/16.
-//  Copyright © 2016 solomidSF. All rights reserved.
+// The MIT License (MIT)
 //
+// Copyright (c) 2015 Yuri R.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 #import "YRTableViewPresenter.h"
 #import "YRTableSectionDatasource+Private.h"
+#import "YRTableRowDatasource+Private.h"
 
 @interface YRTableViewPresenter ()
 <
@@ -55,9 +73,17 @@ UITableViewDataSource
 	}
 }
 
+- (NSArray <YRTableSectionDatasource *> *)sectionDatasource {
+	return [_sectionDatasource copy];
+}
+
 - (void)setSectionDatasource:(NSArray <YRTableSectionDatasource *> *)sectionDatasource {
 	if (_sectionDatasource != sectionDatasource) {
+		[_sectionDatasource setValue:nil forKey:@"presenter"];
+		
 		_sectionDatasource = [sectionDatasource mutableCopy];
+
+		[_sectionDatasource setValue:self forKey:@"presenter"];
 		
 		[self.tableView reloadData];
 	}
@@ -67,10 +93,190 @@ UITableViewDataSource
 
 - (void)beginUpdates {
 	_isPerformingUpdates = YES;
+	
+	[self.tableView beginUpdates];
 }
 
 - (void)endUpdates {
 	_isPerformingUpdates = NO;
+	
+	[self.tableView endUpdates];
+}
+
+#pragma mark - Insert
+
+- (void)insertSectionDatasource:(NSArray <YRTableSectionDatasource *> *)sections atIndex:(NSInteger)index withAnimation:(UITableViewRowAnimation)animation {
+	[sections setValue:self forKey:@"presenter"];
+
+	NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:(NSRange){index, sections.count}];
+	
+	[_sectionDatasource insertObjects:sections atIndexes:indexSet];
+	
+	[self.tableView insertSections:indexSet withRowAnimation:animation];
+}
+
+- (void)insertSectionDatasource:(NSArray <YRTableSectionDatasource *> *)sections beforeSection:(YRTableSectionDatasource *)section withAnimation:(UITableViewRowAnimation)animation {
+	NSInteger sectionIdx = [self.sectionDatasource indexOfObject:section];
+	
+	if (sectionIdx != NSNotFound) {
+		[self insertSectionDatasource:sections atIndex:sectionIdx withAnimation:animation];
+	} else {
+		NSLog(@"[YRTableViewPresenter]: <WARNING> Trying to insert sections %@ before section %@ that isn't present in %@! Ignoring.", sections, section, self);
+	}
+}
+
+- (void)insertSectionDatasource:(NSArray <YRTableSectionDatasource *> *)sections afterSection:(YRTableSectionDatasource *)section withAnimation:(UITableViewRowAnimation)animation {
+	NSInteger sectionIdx = [self.sectionDatasource indexOfObject:section];
+	
+	if (sectionIdx != NSNotFound) {
+		[self insertSectionDatasource:sections atIndex:sectionIdx + 1 withAnimation:animation];
+	} else {
+		NSLog(@"[YRTableViewPresenter]: <WARNING> Trying to insert sections %@ after section %@ that isn't present in %@! Ignoring.", sections, section, self);
+	}
+}
+
+- (void)insertRowDatasource:(NSArray <YRTableRowDatasource *> *)datasource inSection:(YRTableSectionDatasource *)sectionDatasource atIndex:(NSInteger)index withAnimation:(UITableViewRowAnimation)animation {
+	NSInteger sectionIndex = [self.sectionDatasource indexOfObject:sectionDatasource];
+	
+	if (sectionIndex != NSNotFound) {
+		[datasource setValue:sectionDatasource forKey:@"section"];
+
+		NSMutableArray <NSIndexPath *> *indexPaths = [NSMutableArray new];
+		
+		NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:(NSRange){index, datasource.count}];
+		[sectionDatasource.mutableRowDatasource insertObjects:datasource atIndexes:indexes];
+		
+		for (int i = 0; i < datasource.count; i++) {
+			[indexPaths addObject:[NSIndexPath indexPathForRow:index + i inSection:sectionIndex]];
+		}
+		
+		[self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:animation];
+	} else {
+		NSLog(@"[YRTableViewPresenter]: <WARNING> Trying to insert rows %@ for section %@ that isn't present in %@! Ignoring.", datasource, sectionDatasource, self);
+	}
+}
+
+- (void)insertRowDatasource:(NSArray <YRTableRowDatasource *> *)rowDatasource beforeRowDatasource:(YRTableRowDatasource *)datasource withAnimation:(UITableViewRowAnimation)animation {
+	YRTableSectionDatasource *section = datasource.section;
+	
+	if (section) {
+		NSInteger rowIdx = [section.rowDatasource indexOfObject:datasource];
+		
+		if (rowIdx != NSNotFound) {
+			[self insertRowDatasource:rowDatasource inSection:section atIndex:rowIdx withAnimation:animation];
+		} else {
+			NSLog(@"[YRTableViewPresenter]: <ERROR> Trying to insert rows %@ before %@ row, but this row isn't present in associated section in %@! Ignoring.", rowDatasource, datasource, self);
+		}
+	} else {
+		NSLog(@"[YRTableViewPresenter]: <WARNING> Trying to insert rows %@ before %@ row, but this row isn't associated with any section in %@! Ignoring.", rowDatasource, datasource, self);
+	}
+}
+
+- (void)insertRowDatasource:(NSArray <YRTableRowDatasource *> *)rowDatasource afterRowDatasource:(YRTableRowDatasource *)datasource withAnimation:(UITableViewRowAnimation)animation {
+	YRTableSectionDatasource *section = datasource.section;
+	
+	if (section) {
+		NSInteger rowIdx = [section.rowDatasource indexOfObject:datasource];
+		
+		if (rowIdx != NSNotFound) {
+			[self insertRowDatasource:rowDatasource inSection:section atIndex:rowIdx + 1 withAnimation:animation];
+		} else {
+			NSLog(@"[YRTableViewPresenter]: <ERROR> Trying to insert rows %@ after %@ row, but this row isn't present in associated section in %@! Ignoring.", rowDatasource, datasource, self);
+		}
+	} else {
+		NSLog(@"[YRTableViewPresenter]: <WARNING> Trying to insert rows %@ after %@ row, but this row isn't associated with any section in %@! Ignoring.", rowDatasource, datasource, self);
+	}
+}
+
+#pragma mark - Deletion
+
+- (void)removeSectionDatasource:(NSArray <YRTableSectionDatasource *> *)sectionDatasource withAnimation:(UITableViewRowAnimation)animation {
+	NSMutableIndexSet *indexes = [NSMutableIndexSet new];
+	
+	for (YRTableSectionDatasource *datasource in sectionDatasource) {
+		NSInteger idx = [_sectionDatasource indexOfObject:datasource];
+		
+		if (idx != NSNotFound) {
+			datasource.presenter = nil;
+
+			[indexes addIndex:idx];
+		}
+	}
+	
+	[_sectionDatasource removeObjectsAtIndexes:indexes];
+	[self.tableView deleteSections:indexes withRowAnimation:animation];
+}
+
+- (void)removeRowDatasource:(NSArray <YRTableRowDatasource *> *)datasource withAnimation:(UITableViewRowAnimation)animation {
+	NSMutableArray <NSIndexPath *> *indexPaths = [NSMutableArray new];
+	NSMutableDictionary *sectionsAndIndexesMap = [NSMutableDictionary new];
+	
+	for (YRTableRowDatasource *rowDatasource in datasource) {
+		NSInteger sectionIdx = [_sectionDatasource indexOfObject:rowDatasource.section];
+		
+		if (sectionIdx != NSNotFound) {
+			NSInteger rowIdx = [rowDatasource.section.rowDatasource indexOfObject:rowDatasource];
+			
+			if (rowIdx != NSNotFound) {
+				if (sectionsAndIndexesMap[@(sectionIdx)] == nil) {
+					sectionsAndIndexesMap[@(sectionIdx)] = [NSMutableIndexSet new];
+				}
+
+				[(NSMutableIndexSet *)sectionsAndIndexesMap[@(sectionIdx)] addIndex:rowIdx];
+				
+				[indexPaths addObject:[NSIndexPath indexPathForRow:rowIdx inSection:sectionIdx]];
+
+				rowDatasource.section = nil;
+			}
+		}
+	}
+	
+	for (NSNumber *sectionIdx in sectionsAndIndexesMap) {
+		YRTableSectionDatasource *section = _sectionDatasource[[sectionIdx integerValue]];
+		NSIndexSet *rowIndexesToRemove = sectionsAndIndexesMap[sectionIdx];
+		
+		[section.mutableRowDatasource removeObjectsAtIndexes:rowIndexesToRemove];
+	}
+		
+	[self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:animation];
+}
+
+- (void)removeAllRowsInSection:(YRTableSectionDatasource *)section withAnimation:(UITableViewRowAnimation)animation {
+	[self removeRowDatasource:section.rowDatasource withAnimation:animation];
+}
+
+#pragma mark - Reload
+
+- (void)reloadSections:(NSArray <YRTableSectionDatasource *> *)sections withRowAnimation:(UITableViewRowAnimation)animation {
+	NSMutableIndexSet *indexes = [NSMutableIndexSet new];
+	
+	for (YRTableSectionDatasource *section in sections) {
+		NSInteger idx = [_sectionDatasource indexOfObject:section];
+		
+		if (idx != NSNotFound) {
+			[indexes addIndex:idx];
+		}
+	}
+	
+	[self.tableView reloadSections:indexes withRowAnimation:animation];
+}
+
+- (void)reloadRows:(NSArray <YRTableRowDatasource *> *)rows withAnimation:(UITableViewRowAnimation)animation {
+	NSMutableArray <NSIndexPath *> *indexes = [NSMutableArray new];
+	
+	for (YRTableRowDatasource *row in rows) {
+		NSInteger sectionIdx = [_sectionDatasource indexOfObject:row.section];
+		
+		if (sectionIdx != NSNotFound) {
+			NSInteger rowIdx = [row.section.rowDatasource indexOfObject:row];
+			
+			if (rowIdx != NSNotFound) {
+				[indexes addObject:[NSIndexPath indexPathForRow:rowIdx inSection:sectionIdx]];
+			}
+		}
+	}
+	
+	[self.tableView reloadRowsAtIndexPaths:indexes withRowAnimation:animation];
 }
 
 #pragma mark - <UITableViewDelegate&Datasource>

@@ -34,17 +34,17 @@ typedef NSIndexPath * __nullable (^YRTableRowDatasourceWillSelectDeselectCallbac
  */
 @property (nonatomic, nullable) id context;
 
-@property (nonatomic, copy) YRTableRowDatasourceCallback configurationCallback;
-@property (nonatomic, copy) YRTableRowDatasourceCallback willDisplayCallback;
-@property (nonatomic, copy) YRTableRowDatasourceCallback didEndDisplayingCallback;
-@property (nonatomic, copy) YRTableRowDatasourceBooleanReturnCallback shouldHighlightCallback;
-@property (nonatomic, copy) YRTableRowDatasourceCallback highlightCallback;
-@property (nonatomic, copy) YRTableRowDatasourceCallback unhighlightCallback;
-@property (nonatomic, copy) YRTableRowDatasourceWillSelectDeselectCallback willSelectCallback;
-@property (nonatomic, copy) YRTableRowDatasourceWillSelectDeselectCallback willDeselectCallback;
-@property (nonatomic, copy) YRTableRowDatasourceCallback accessoryTappedCallback;
-@property (nonatomic, copy) YRTableRowDatasourceCallback selectionCallback;
-@property (nonatomic, copy) YRTableRowDatasourceCallback deselectionCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceCallback configurationCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceCallback willDisplayCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceCallback didEndDisplayingCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceBooleanReturnCallback shouldHighlightCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceCallback highlightCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceCallback unhighlightCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceWillSelectDeselectCallback willSelectCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceWillSelectDeselectCallback willDeselectCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceCallback accessoryTappedCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceCallback selectionCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceCallback deselectionCallback;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)identifier context:(nullable id)context;
 

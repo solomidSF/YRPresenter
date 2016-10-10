@@ -27,6 +27,8 @@
 
 #import "YRTableSectionDatasource.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  Manages table view, let you focus on your content.
  */
@@ -56,5 +58,26 @@
 
 #pragma mark - Insert
 
+- (void)insertSectionDatasource:(NSArray <YRTableSectionDatasource *> *)sections atIndex:(NSInteger)index withAnimation:(UITableViewRowAnimation)animation;
+- (void)insertSectionDatasource:(NSArray <YRTableSectionDatasource *> *)sections beforeSection:(YRTableSectionDatasource *)section withAnimation:(UITableViewRowAnimation)animation;
+- (void)insertSectionDatasource:(NSArray <YRTableSectionDatasource *> *)sections afterSection:(YRTableSectionDatasource *)section withAnimation:(UITableViewRowAnimation)animation;
+
+- (void)insertRowDatasource:(NSArray <YRTableRowDatasource *> *)datasource inSection:(YRTableSectionDatasource *)sectionDatasource atIndex:(NSInteger)index withAnimation:(UITableViewRowAnimation)animation;
+- (void)insertRowDatasource:(NSArray <YRTableRowDatasource *> *)rowDatasource afterRowDatasource:(YRTableRowDatasource *)datasource withAnimation:(UITableViewRowAnimation)animation;
+- (void)insertRowDatasource:(NSArray <YRTableRowDatasource *> *)rowDatasource beforeRowDatasource:(YRTableRowDatasource *)datasource withAnimation:(UITableViewRowAnimation)animation;
+
+#pragma mark - Deletion
+
+- (void)removeSectionDatasource:(NSArray <YRTableSectionDatasource *> *)sectionDatasource withAnimation:(UITableViewRowAnimation)animation;
+
+- (void)removeRowDatasource:(NSArray <YRTableRowDatasource *> *)datasource withAnimation:(UITableViewRowAnimation)animation;
+- (void)removeAllRowsInSection:(YRTableSectionDatasource *)section withAnimation:(UITableViewRowAnimation)animation;
+
+#pragma mark - Reload
+
+- (void)reloadSections:(NSArray <YRTableSectionDatasource *> *)sections withRowAnimation:(UITableViewRowAnimation)animation;
+- (void)reloadRows:(NSArray <YRTableRowDatasource *> *)rows withAnimation:(UITableViewRowAnimation)animation;
 
 @end
+
+NS_ASSUME_NONNULL_END

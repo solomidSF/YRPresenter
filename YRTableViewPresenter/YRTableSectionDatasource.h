@@ -36,12 +36,12 @@ typedef UIView * __nullable (^YRTableSectionDatasourceViewCallback) (YRTableSect
  */
 @property (nonatomic, nullable) id context;
 
-@property (nonatomic, copy) YRTableSectionDatasourceHeightCallback headerHeightCallback;
-@property (nonatomic, copy) YRTableSectionDatasourceHeightCallback footerHeightCallback;
-@property (nonatomic, copy) YRTableSectionDatasourceTitleCallback headerTitleCallback;
-@property (nonatomic, copy) YRTableSectionDatasourceTitleCallback footerTitleCallback;
-@property (nonatomic, copy) YRTableSectionDatasourceViewCallback headerViewCallback;
-@property (nonatomic, copy) YRTableSectionDatasourceViewCallback footerViewCallback;
+@property (nonatomic, copy, nullable) YRTableSectionDatasourceHeightCallback headerHeightCallback;
+@property (nonatomic, copy, nullable) YRTableSectionDatasourceHeightCallback footerHeightCallback;
+@property (nonatomic, copy, nullable) YRTableSectionDatasourceTitleCallback headerTitleCallback;
+@property (nonatomic, copy, nullable) YRTableSectionDatasourceTitleCallback footerTitleCallback;
+@property (nonatomic, copy, nullable) YRTableSectionDatasourceViewCallback headerViewCallback;
+@property (nonatomic, copy, nullable) YRTableSectionDatasourceViewCallback footerViewCallback;
 
 - (instancetype)initWithContext:(__nullable id)context;
 - (instancetype)initWithRowDatasource:(NSArray <YRTableRowDatasource *> * __nullable)rowDatasource

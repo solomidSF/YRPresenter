@@ -36,6 +36,7 @@
 		7D81472C1DA82CB100D36E28 /* YRTableRowDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRTableRowDatasource.h; sourceTree = "<group>"; };
 		7D81472D1DA82CB100D36E28 /* YRTableRowDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRTableRowDatasource.m; sourceTree = "<group>"; };
 		7D81472F1DA8314F00D36E28 /* YRTableSectionDatasource+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YRTableSectionDatasource+Private.h"; sourceTree = "<group>"; };
+		7DA62B1D1DAC50EB0079146E /* YRTableRowDatasource+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YRTableRowDatasource+Private.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +140,7 @@
 				7D81472F1DA8314F00D36E28 /* YRTableSectionDatasource+Private.h */,
 				7D8147291DA82C3D00D36E28 /* YRTableSectionDatasource.h */,
 				7D81472A1DA82C3D00D36E28 /* YRTableSectionDatasource.m */,
+				7DA62B1D1DAC50EB0079146E /* YRTableRowDatasource+Private.h */,
 				7D81472C1DA82CB100D36E28 /* YRTableRowDatasource.h */,
 				7D81472D1DA82CB100D36E28 /* YRTableRowDatasource.m */,
 			);

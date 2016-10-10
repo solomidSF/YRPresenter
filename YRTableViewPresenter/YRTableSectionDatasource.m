@@ -10,11 +10,10 @@
 
 @interface YRTableSectionDatasource ()
 @property (nonatomic, weak, readwrite, nullable) YRTableViewPresenter *presenter;
+@property (nonatomic, readwrite) NSMutableArray <YRTableRowDatasource *> *mutableRowDatasource;
 @end
 
-@implementation YRTableSectionDatasource {
-	NSMutableArray <YRTableRowDatasource *> *_rowDatasource;
-}
+@implementation YRTableSectionDatasource
 
 #pragma mark - Lifecycle
 
@@ -25,11 +24,19 @@
 - (instancetype)initWithRowDatasource:(NSArray <YRTableRowDatasource *> * __nullable)rowDatasource
 							  context:(__nullable id)context {
 	if (self = [super init]) {
-		_rowDatasource = rowDatasource ? [rowDatasource mutableCopy] : [NSMutableArray new];
+		self.mutableRowDatasource = rowDatasource ? [rowDatasource mutableCopy] : [NSMutableArray new];
 		_context = context;
+		
+		[self.mutableRowDatasource setValue:self forKey:@"section"];
 	}
 	
 	return self;
+}
+
+#pragma mark - Dynamic Properties
+
+- (NSArray <YRTableRowDatasource *> *)rowDatasource {
+	return [self.mutableRowDatasource copy];
 }
 
 @end
