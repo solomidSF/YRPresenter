@@ -29,6 +29,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^YRTableViewPresenterScrollCallback) (UIScrollView *scrollView);
+
 /**
  *  Manages table view, let you focus on your content.
  */
@@ -48,6 +50,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  Tells if receiver is performing updates on it's datasource.
  */
 @property (nonatomic, readonly) BOOL isPerformingUpdates;
+
+@property (nonatomic, copy, nullable) YRTableViewPresenterScrollCallback scrollViewDidScrollCallback;
+@property (nonatomic, copy, nullable) YRTableViewPresenterScrollCallback scrollViewWillBeginDraggingCallback;
+@property (nonatomic, copy, nullable) void (^scrollViewDidEndDraggingCallback) (UIScrollView *scrollView, BOOL willDecelerate);
+@property (nonatomic, copy, nullable) void (^contentSizeDidChangeCallback) (UITableView  *tableView);
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
 

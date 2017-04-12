@@ -13,9 +13,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^YRTableRowDatasourceCallback) (YRTableRowDatasource *datasource, UITableView *tableView, UITableViewCell * __nullable cell, NSIndexPath *indexPath);
+typedef void (^YRTableRowDatasourceCallback) (YRTableRowDatasource *datasource, UITableView *tableView, __kindof UITableViewCell * __nullable cell, NSIndexPath *indexPath);
 typedef BOOL (^YRTableRowDatasourceBooleanReturnCallback) (YRTableRowDatasource *datasource, UITableView *tableView, UITableViewCell * __nullable cell, NSIndexPath *indexPath);
 typedef NSIndexPath * __nullable (^YRTableRowDatasourceWillSelectDeselectCallback) (YRTableRowDatasource *datasource, UITableView *tableView, UITableViewCell * __nullable cell, NSIndexPath *indexPath);
+typedef CGFloat (^YRTableRowDatasourceFloatReturnCallback) (YRTableRowDatasource *datasource, UITableView *tableView, __kindof UITableViewCell * __nullable cell, NSIndexPath *indexPath);
 
 @interface YRTableRowDatasource : NSObject
 
@@ -34,6 +35,10 @@ typedef NSIndexPath * __nullable (^YRTableRowDatasourceWillSelectDeselectCallbac
  */
 @property (nonatomic, nullable) id context;
 
+@property (nonatomic) CGFloat leadingNormalizedMargin;
+@property (nonatomic) CGFloat trailingNormalizedMargin;
+
+@property (nonatomic, copy, nullable) YRTableRowDatasourceFloatReturnCallback estimatedHeightCallback;
 @property (nonatomic, copy, nullable) YRTableRowDatasourceCallback configurationCallback;
 @property (nonatomic, copy, nullable) YRTableRowDatasourceCallback willDisplayCallback;
 @property (nonatomic, copy, nullable) YRTableRowDatasourceCallback didEndDisplayingCallback;
@@ -45,6 +50,7 @@ typedef NSIndexPath * __nullable (^YRTableRowDatasourceWillSelectDeselectCallbac
 @property (nonatomic, copy, nullable) YRTableRowDatasourceCallback accessoryTappedCallback;
 @property (nonatomic, copy, nullable) YRTableRowDatasourceCallback selectionCallback;
 @property (nonatomic, copy, nullable) YRTableRowDatasourceCallback deselectionCallback;
+@property (nonatomic, copy, nullable) YRTableRowDatasourceCallback deletionCallback;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)identifier context:(nullable id)context;
 

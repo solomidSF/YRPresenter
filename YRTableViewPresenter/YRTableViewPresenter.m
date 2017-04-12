@@ -50,10 +50,16 @@ UITableViewDataSource
 		_tableView.delegate = self;
 		_tableView.dataSource = self;
 		
+		[_tableView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:NULL];
+		
 		_sectionDatasource = [NSMutableArray new];
 	}
 	
 	return self;
+}
+
+- (void)dealloc {
+	[_tableView removeObserver:self forKeyPath:@"contentSize"];
 }
 
 - (void)awakeFromNib {
@@ -70,6 +76,8 @@ UITableViewDataSource
 		
 		_tableView.delegate = self;
 		_tableView.dataSource = self;
+		
+		[_tableView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:NULL];
 	}
 }
 
@@ -237,7 +245,7 @@ UITableViewDataSource
 		
 		[section.mutableRowDatasource removeObjectsAtIndexes:rowIndexesToRemove];
 	}
-		
+	
 	[self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:animation];
 }
 
@@ -277,6 +285,30 @@ UITableViewDataSource
 	}
 	
 	[self.tableView reloadRowsAtIndexPaths:indexes withRowAnimation:animation];
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+	if ([keyPath isEqualToString:@"contentSize"]) {
+		!self.contentSizeDidChangeCallback ?: self.contentSizeDidChangeCallback(self.tableView);
+	} else {
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	}
+}
+
+#pragma mark - <UIScrollViewDelegate>
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	!_scrollViewDidScrollCallback ?: _scrollViewDidScrollCallback(scrollView);
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+	!_scrollViewWillBeginDraggingCallback ?: _scrollViewWillBeginDraggingCallback(scrollView);
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+	!_scrollViewDidEndDraggingCallback ?: _scrollViewDidEndDraggingCallback(scrollView, decelerate);
 }
 
 #pragma mark - <UITableViewDelegate&Datasource>
@@ -349,11 +381,26 @@ UITableViewDataSource
 	return self.sectionDatasource[section].rowDatasource.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	YRTableRowDatasource *datasource = self.sectionDatasource[indexPath.section].rowDatasource[indexPath.row];
+	
+	if (datasource.estimatedHeightCallback) {
+		return datasource.estimatedHeightCallback(datasource, tableView, nil, indexPath);
+	} else {
+		return tableView.estimatedRowHeight;
+	}
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	YRTableRowDatasource *datasource = self.sectionDatasource[indexPath.section].rowDatasource[indexPath.row];
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:datasource.identifier];
-
+	
+	CGFloat leadingInset = datasource.leadingNormalizedMargin * tableView.bounds.size.width;
+	CGFloat trailingInset = datasource.trailingNormalizedMargin * tableView.bounds.size.width;
+	
+	cell.contentView.layoutMargins = UIEdgeInsetsMake(0, leadingInset, 0, trailingInset);
+	
 	!datasource.configurationCallback ?: datasource.configurationCallback(datasource, tableView, cell, indexPath);
 	
 	return cell;
@@ -366,9 +413,31 @@ UITableViewDataSource
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
+	if (indexPath.section < self.sectionDatasource.count &&
+		indexPath.row < self.sectionDatasource[indexPath.section].rowDatasource.count) {
+		YRTableRowDatasource *datasource = self.sectionDatasource[indexPath.section].rowDatasource[indexPath.row];
+		
+		!datasource.didEndDisplayingCallback ?: datasource.didEndDisplayingCallback(datasource, tableView, [tableView cellForRowAtIndexPath:indexPath], indexPath);
+	}
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 	YRTableRowDatasource *datasource = self.sectionDatasource[indexPath.section].rowDatasource[indexPath.row];
-	
-	!datasource.didEndDisplayingCallback ?: datasource.didEndDisplayingCallback(datasource, tableView, [tableView cellForRowAtIndexPath:indexPath], indexPath);
+
+	return datasource.deletionCallback != nil;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+	forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		YRTableRowDatasource *datasource = self.sectionDatasource[indexPath.section].rowDatasource[indexPath.row];
+
+		if (datasource.deletionCallback) {
+			datasource.deletionCallback(datasource, tableView, [tableView cellForRowAtIndexPath:indexPath], indexPath);
+			
+			[self removeRowDatasource:@[datasource] withAnimation:UITableViewRowAnimationLeft];
+		}
+	}
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
@@ -418,7 +487,6 @@ UITableViewDataSource
 		return indexPath;
 	}
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	YRTableRowDatasource *datasource = self.sectionDatasource[indexPath.section].rowDatasource[indexPath.row];
 

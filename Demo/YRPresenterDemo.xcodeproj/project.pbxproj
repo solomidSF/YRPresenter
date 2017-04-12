@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7D81471B1DA82A8400D36E28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D81470D1DA82A8400D36E28 /* AppDelegate.m */; };
-		7D81471C1DA82A8400D36E28 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8147101DA82A8400D36E28 /* ViewController.m */; };
+		7D81471C1DA82A8400D36E28 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8147101DA82A8400D36E28 /* DemoViewController.m */; };
 		7D81471D1DA82A8400D36E28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D8147121DA82A8400D36E28 /* Assets.xcassets */; };
 		7D81471E1DA82A8400D36E28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8147141DA82A8400D36E28 /* LaunchScreen.storyboard */; };
 		7D81471F1DA82A8400D36E28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8147161DA82A8400D36E28 /* Main.storyboard */; };
@@ -16,14 +16,18 @@
 		7D8147271DA82B3F00D36E28 /* YRTableViewPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8147261DA82B3F00D36E28 /* YRTableViewPresenter.m */; };
 		7D81472B1DA82C3D00D36E28 /* YRTableSectionDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D81472A1DA82C3D00D36E28 /* YRTableSectionDatasource.m */; };
 		7D81472E1DA82CB100D36E28 /* YRTableRowDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D81472D1DA82CB100D36E28 /* YRTableRowDatasource.m */; };
+		7DB032621DE730460033905E /* YRCollectionViewPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB032611DE730460033905E /* YRCollectionViewPresenter.m */; };
+		7DB032651DE730500033905E /* YRCollectionRowDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB032641DE730500033905E /* YRCollectionRowDatasource.m */; };
+		7DD09BF41DB5553800BF54EE /* SimpleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD09BF31DB5553800BF54EE /* SimpleTableViewController.m */; };
+		7DD09BF81DB57AFD00BF54EE /* SimpleTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD09BF71DB57AFD00BF54EE /* SimpleTableCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7D8146F01DA8286A00D36E28 /* YRPresenterDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YRPresenterDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D81470C1DA82A8400D36E28 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7D81470D1DA82A8400D36E28 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7D81470F1DA82A8400D36E28 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		7D8147101DA82A8400D36E28 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7D81470F1DA82A8400D36E28 /* DemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
+		7D8147101DA82A8400D36E28 /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		7D8147121DA82A8400D36E28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7D8147151DA82A8400D36E28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D8147171DA82A8400D36E28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -37,6 +41,14 @@
 		7D81472D1DA82CB100D36E28 /* YRTableRowDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRTableRowDatasource.m; sourceTree = "<group>"; };
 		7D81472F1DA8314F00D36E28 /* YRTableSectionDatasource+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YRTableSectionDatasource+Private.h"; sourceTree = "<group>"; };
 		7DA62B1D1DAC50EB0079146E /* YRTableRowDatasource+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YRTableRowDatasource+Private.h"; sourceTree = "<group>"; };
+		7DB032601DE730460033905E /* YRCollectionViewPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRCollectionViewPresenter.h; sourceTree = "<group>"; };
+		7DB032611DE730460033905E /* YRCollectionViewPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRCollectionViewPresenter.m; sourceTree = "<group>"; };
+		7DB032631DE730500033905E /* YRCollectionRowDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRCollectionRowDatasource.h; sourceTree = "<group>"; };
+		7DB032641DE730500033905E /* YRCollectionRowDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRCollectionRowDatasource.m; sourceTree = "<group>"; };
+		7DD09BF21DB5553800BF54EE /* SimpleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleTableViewController.h; sourceTree = "<group>"; };
+		7DD09BF31DB5553800BF54EE /* SimpleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleTableViewController.m; sourceTree = "<group>"; };
+		7DD09BF61DB57AFD00BF54EE /* SimpleTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleTableCell.h; sourceTree = "<group>"; };
+		7DD09BF71DB57AFD00BF54EE /* SimpleTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleTableCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,8 +102,11 @@
 		7D81470E1DA82A8400D36E28 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				7D81470F1DA82A8400D36E28 /* ViewController.h */,
-				7D8147101DA82A8400D36E28 /* ViewController.m */,
+				7DD09BF51DB555A600BF54EE /* Cells */,
+				7D81470F1DA82A8400D36E28 /* DemoViewController.h */,
+				7D8147101DA82A8400D36E28 /* DemoViewController.m */,
+				7DD09BF21DB5553800BF54EE /* SimpleTableViewController.h */,
+				7DD09BF31DB5553800BF54EE /* SimpleTableViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -151,9 +166,22 @@
 		7D8147241DA82B2300D36E28 /* YRCollectionViewPresenter */ = {
 			isa = PBXGroup;
 			children = (
+				7DB032601DE730460033905E /* YRCollectionViewPresenter.h */,
+				7DB032611DE730460033905E /* YRCollectionViewPresenter.m */,
+				7DB032631DE730500033905E /* YRCollectionRowDatasource.h */,
+				7DB032641DE730500033905E /* YRCollectionRowDatasource.m */,
 			);
 			name = YRCollectionViewPresenter;
 			path = ../../../YRCollectionViewPresenter;
+			sourceTree = "<group>";
+		};
+		7DD09BF51DB555A600BF54EE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7DD09BF61DB57AFD00BF54EE /* SimpleTableCell.h */,
+				7DD09BF71DB57AFD00BF54EE /* SimpleTableCell.m */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,10 +257,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D81472B1DA82C3D00D36E28 /* YRTableSectionDatasource.m in Sources */,
-				7D81471C1DA82A8400D36E28 /* ViewController.m in Sources */,
+				7D81471C1DA82A8400D36E28 /* DemoViewController.m in Sources */,
+				7DB032621DE730460033905E /* YRCollectionViewPresenter.m in Sources */,
 				7D8147211DA82A8400D36E28 /* main.m in Sources */,
+				7DB032651DE730500033905E /* YRCollectionRowDatasource.m in Sources */,
 				7D81471B1DA82A8400D36E28 /* AppDelegate.m in Sources */,
 				7D8147271DA82B3F00D36E28 /* YRTableViewPresenter.m in Sources */,
+				7DD09BF41DB5553800BF54EE /* SimpleTableViewController.m in Sources */,
+				7DD09BF81DB57AFD00BF54EE /* SimpleTableCell.m in Sources */,
 				7D81472E1DA82CB100D36E28 /* YRTableRowDatasource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
